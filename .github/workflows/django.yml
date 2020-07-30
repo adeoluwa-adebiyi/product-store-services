@@ -28,4 +28,5 @@ jobs:
     - name: Run Tests
       run: |
         echo "MODE=dev" >> ./pss_app/.env
+        cd ..
         python manage.py test
