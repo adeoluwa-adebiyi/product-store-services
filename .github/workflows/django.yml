@@ -27,6 +27,6 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
-        echo "MODE=dev" >> ./pss_app/.env
-        cd ..
+        echo "MODE=dev" >> ./pss_app/pss_app/.env
+        cd pss_app
         python manage.py test
