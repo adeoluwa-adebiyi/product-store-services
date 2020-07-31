@@ -1,5 +1,7 @@
 Django==2.2
+django-extensions==3.0.3
 djangorestframework==3.11.0
 python-dotenv==0.14.0
 pytz==2020.1
+six==1.15.0
 sqlparse==0.3.1
