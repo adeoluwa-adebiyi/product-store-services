@@ -31,13 +31,22 @@ class User(AbstractUser):
 
 class Checkout(models.Model):
     reference = models.UUIDField(null=False)
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL)
     customer = models.ForeignKey(User, on_delete=models.SET_NULL)
     auth_code = models.CharField(max_length=20, null=True)
     payment_service = models.CharField(max_length=30, null=False)
+    total = models.IntegerField()
+
+
+class CheckoutProductsInfo(models.Model):
+    id = models.AutoField()
+    checkout = models.ForeignKey(Checkout, on_delete=models.SET_NULL)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL)
+    quantity = models.IntegerField(null=False)
+    sub_total = models.FloatField(null=False)
 
 
 class Order(models.Model):
     id = models.AutoField()
     reference = models.UUIDField(null=False)
     checkout = models.ForeignKey(Checkout, on_delete=models.CASCADE)
+    payment_status = models.BooleanField(default=False)
