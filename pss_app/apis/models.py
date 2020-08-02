@@ -5,48 +5,49 @@ from django.db import models
 
 
 class ProductCategory(models.Model):
-    id = models.AutoField(),
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=60)
 
 
 class ProductBrand(models.Model):
-    id = models.AutoField(),
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=60)
 
 
 class Product(models.Model):
-    id = models.AutoField()
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=60, null=False)
-    brand = models.ForeignKey(ProductBrand, on_delete=models.SET_NULL)
-    category = models.ForeignKey(ProductCategory, on_delete=models.SET_NULL)
+    brand = models.ForeignKey(ProductBrand, on_delete=models.SET_NULL,null=True)
+    category = models.ForeignKey(ProductCategory, on_delete=models.SET_NULL, null=True)
     image = models.TextField(null=True)
     price = models.FloatField(null=False)
 
 
 class User(AbstractUser):
-    id = models.AutoField()
+    id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=30, null=False)
     last_name = models.CharField(max_length=30, null=False)
 
 
 class Checkout(models.Model):
+    id = models.AutoField(primary_key=True)
     reference = models.UUIDField(null=False)
-    customer = models.ForeignKey(User, on_delete=models.SET_NULL)
+    customer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     auth_code = models.CharField(max_length=20, null=True)
     payment_service = models.CharField(max_length=30, null=False)
     total = models.IntegerField()
 
 
 class CheckoutProductsInfo(models.Model):
-    id = models.AutoField()
-    checkout = models.ForeignKey(Checkout, on_delete=models.SET_NULL)
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL)
+    id = models.AutoField(primary_key=True)
+    checkout = models.ForeignKey(Checkout, on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     quantity = models.IntegerField(null=False)
     sub_total = models.FloatField(null=False)
 
 
 class Order(models.Model):
-    id = models.AutoField()
+    id = models.AutoField(primary_key=True)
     reference = models.UUIDField(null=False)
-    checkout = models.ForeignKey(Checkout, on_delete=models.CASCADE)
+    checkout = models.ForeignKey(Checkout, on_delete=models.CASCADE, null=True)
     payment_status = models.BooleanField(default=False)
