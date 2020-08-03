@@ -7,7 +7,7 @@ on:
     branches: [ develop ]
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
     strategy:
@@ -30,3 +30,28 @@ jobs:
         echo "MODE=dev" >> ./pss_app/pss_app/.env
         cd pss_app
         python manage.py test
+
+  build-and-deploy:
+    needs: test
+    name: Building and pushing image to AWS ECR
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup ECR
+        run: |
+          $( aws ecr get-login --no-include-email)
+
+      - name: Buld and tag the image
+        run: |
+          docker build \
+            -t $CONTAINER_IMAGE \
+            -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE .
+
+      - name: Push
+#        if: giihub.ref == 'refs/heads/develop'
+        run: |
+          docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE
+
