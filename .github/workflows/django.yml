@@ -43,19 +43,38 @@ jobs:
 
   build-and-deploy:
     needs: test
-    name: Building and pushing image to AWS ECR
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: kciter/aws-ecr-action@v1
-        with:
-          access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          account_id: ${{ secrets.AWS_ACCOUNT_ID }}
-          repo: 672773168952.dkr.ecr.us-east-2.amazonaws.com/djangopssapp
-          region: eu-west-2
-          tags: latest,${{ github.sha }}
-          create_repo: true
+
+      - name: Login to Amazon ECR
+          id: login-ecr
+          uses: aws-actions/amazon-ecr-login@v1
+
+            - name: Configure AWS credentials
+              uses: aws-actions/configure-aws-credentials@v1
+              with:
+                aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                aws-region: us-east-2
+
+              run: |
+                docker build -t 672773168952.dkr.ecr.us-east-2.amazonaws.com/djangopssapp:latest .
+                docker push 672773168952.dkr.ecr.us-east-2.amazonaws.com/djangopssapp:latest
+
+            - name: Login to Amazon ECR
+              id: login-ecr
+              uses: aws-actions/amazon-ecr-login@v1
+#    name: Building and pushing image to AWS ECR
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#      - uses: kciter/aws-ecr-action@v1
+#        with:
+#          access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          account_id: ${{ secrets.AWS_ACCOUNT_ID }}
+#          repo: 672773168952.dkr.ecr.us-east-2.amazonaws.com/djangopssapp
+#          region: eu-west-2
+#          tags: latest,${{ github.sha }}
+#          create_repo: true
 
 #      - name: Push
 ##        if: giihub.ref == 'refs/heads/develop'
