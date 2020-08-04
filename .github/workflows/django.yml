@@ -56,8 +56,6 @@ jobs:
 
       - name: Buld and tag the image
         run: |
-          ls -l
-          cd ..
           docker build \
             -t $CONTAINER_IMAGE \
             -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE .
