@@ -56,12 +56,6 @@ jobs:
           tags: latest,${{ github.sha }}
           create_repo: true
 
-#      - name: Run docker build
-#        run: |
-#          docker build \
-#            -t $CONTAINER_IMAGE \
-#            -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE .
-
       - name: Push
 #        if: giihub.ref == 'refs/heads/develop'
         run: |
