@@ -46,15 +46,15 @@ jobs:
     name: Building and pushing image to AWS ECR
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+      - uses: Terranovax/aws-ecr-deploy@v1
+        with:
+          access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          account_id: ${{ secrets.AWS_ACCOUNT_ID }}
+          region: eu-west-1
 
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup ECR
-        run: |
-          $( aws ecr get-login --no-include-email)
-
-      - name: Buld and tag the image
+      - name: Run docker build
         run: |
           docker build \
             -t $CONTAINER_IMAGE \
