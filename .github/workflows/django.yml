@@ -43,7 +43,12 @@ jobs:
 
   build-and-deploy:
     needs: test
+    env:
+      ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      ECR_REPOSITORY: djangopssapp
+      IMAGE_TAG: ${{ github.sha }}
 
+      steps:
       - name: Login to Amazon ECR
           id: login-ecr
           uses: aws-actions/amazon-ecr-login@v1
@@ -56,12 +61,9 @@ jobs:
                 aws-region: us-east-2
 
               run: |
-                docker build -t 672773168952.dkr.ecr.us-east-2.amazonaws.com/djangopssapp:latest .
-                docker push 672773168952.dkr.ecr.us-east-2.amazonaws.com/djangopssapp:latest
-
-            - name: Login to Amazon ECR
-              id: login-ecr
-              uses: aws-actions/amazon-ecr-login@v1
+                docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+                docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+                echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 #    name: Building and pushing image to AWS ECR
 #    runs-on: ubuntu-latest
 #    steps:
