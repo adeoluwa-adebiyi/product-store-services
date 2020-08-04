@@ -39,6 +39,7 @@ jobs:
         echo "MODE=dev" >> ./pss_app/pss_app/.env
         cd pss_app
         python manage.py test
+        cd ..
 
   build-and-deploy:
     needs: test
