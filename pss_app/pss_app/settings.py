@@ -26,7 +26,8 @@ SECRET_KEY = '($e4lonsbgn6+z#z3301b%wp69ed-_+%x8kcvh^xm#lsvd@(q7'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "35.225.132.120"
+    "35.225.132.120",
+    "localhost"
 ]
 
 

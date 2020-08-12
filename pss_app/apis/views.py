@@ -11,6 +11,8 @@ import graphene
 
 from apis.queries.product import ProductQuery
 
+from apis.queries.checkout import RootMutation
+
 
 class AppTitleType(ObjectType):
     name = graphene.String()
@@ -29,4 +31,4 @@ class APIGqlView(APIView, GraphQLView):
         return super().as_view(**initkwargs)
 
 
-schema = graphene.Schema(query=RootQuery)
+schema = graphene.Schema(query=RootQuery, mutation=RootMutation)
