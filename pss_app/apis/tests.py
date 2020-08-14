@@ -151,6 +151,7 @@ class CreateCheckoutTestCase(TestCase):
                             order{
                                 reference
                                 accessCode
+                                price
                             }
                         }
                     }
@@ -161,3 +162,5 @@ class CreateCheckoutTestCase(TestCase):
         self.assertTrue(isinstance(result.data["checkout"]["order"]["reference"], str) and result.data["checkout"]["order"]["reference"] != "")
         self.assertIsNotNone(result.data["checkout"]["order"]["accessCode"])
         self.assertTrue(isinstance(result.data["checkout"]["order"]["accessCode"], str) and result.data["checkout"]["order"]["accessCode"] != "")
+        self.assertIsNotNone(result.data["checkout"]["order"]["price"])
+        self.assertTrue(isinstance(result.data["checkout"]["order"]["price"], float) and result.data["checkout"]["order"]["price"] is not None)

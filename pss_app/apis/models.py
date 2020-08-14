@@ -51,3 +51,12 @@ class Order(models.Model):
     checkout = models.ForeignKey(Checkout, on_delete=models.CASCADE, null=True)
     payment_status = models.BooleanField(default=False)
     access_code = models.CharField(max_length=20, null=True)
+    payment_details = models.ForeignKey("PaymentDetails", on_delete=models.SET_NULL, null=True)
+
+
+class PaymentDetails(models.Model):
+    id = models.AutoField(primary_key=True)
+    transaction_id = models.CharField(max_length=20, null=False)
+    reference = models.CharField(max_length=40)
+    json_dump = models.TextField()
+    payment_gateway = models.CharField(max_length=20)

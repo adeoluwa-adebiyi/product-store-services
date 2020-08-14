@@ -9,6 +9,7 @@ import json
 class OrderObject(ObjectType):
     access_code = String()
     reference = String()
+    price = Float()
 
 
 class CheckoutShopping(Mutation):
@@ -24,7 +25,7 @@ class CheckoutShopping(Mutation):
         _data = json.loads(data)
         checkout = checkout_service.create_checkout(data=_data, user=User.objects.all().first())
         order = order_service.create_order(checkout=checkout)
-        return CheckoutShopping(order=OrderObject(access_code=order.access_code, reference=order.reference))
+        return CheckoutShopping(order=OrderObject(access_code=order.access_code, reference=order.reference, price=checkout.total))
 
 
 class RootMutation(ObjectType):
