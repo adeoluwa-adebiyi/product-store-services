@@ -47,15 +47,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        run: |
-          $( aws ecr get-login --no-include-email )
+
+      - name: Setup AWS ECR
+      - run: |
+          eval $(aws ecr get-login --no-include-email | sed 's|https://||')
+
       - uses: kciter/aws-ecr-action@v1
         with:
           access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           account_id: ${{ secrets.AWS_ACCOUNT_ID }}
           repo: 672773168952.dkr.ecr.us-east-2.amazonaws.com/djangopssapp
-          region: eu-west-2
+          region: us-east-2
           tags: latest,${{ github.sha }}
           create_repo: true
 
