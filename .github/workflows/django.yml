@@ -53,7 +53,7 @@ jobs:
           access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           account_id: ${{ secrets.AWS_ACCOUNT_ID }}
-          repo: 672773168952.dkr.ecr.eu-west-2.amazonaws.com/djangopssapp
+          repo: dkr.ecr.eu-west-2.amazonaws.com/djangopssapp
           region: eu-west-2
           tags: latest,${{ github.sha }}
           create_repo: true
