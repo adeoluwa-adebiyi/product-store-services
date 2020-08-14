@@ -48,6 +48,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Setup AWS ECR
+      - run: |
+          eval $(aws ecr get-login --no-include-email | sed 's|https://||')
+
       - uses: kciter/aws-ecr-action@v1
         with:
           access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
