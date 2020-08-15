@@ -66,6 +66,6 @@ jobs:
 #        if: giihub.ref == 'refs/heads/develop'
         run: |
           docker build -t $CONTAINER_IMAGE -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE .
-          eval $( aws ecr get-login --no-include-email --region eu-west-2 )
+          eval $( aws ecr get-login-password --region eu-west-2 )
           docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE
 #
