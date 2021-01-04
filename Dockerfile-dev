@@ -10,8 +10,14 @@ RUN apt install -y python3 python3-pip
 
 RUN pip3 install --no-cache-dir -r requirements.txt
 
+RUN pip3 install gunicorn
+
 EXPOSE 80
 
 RUN echo "MODE = dev" > pss_app/.env
 
-CMD ["python3", "pss_app/manage.py", "runserver", "0.0.0.0:80"]
+WORKDIR pss_app
+
+# CMD ["python3", "pss_app/manage.py", "runserver", "0.0.0.0:80"]
+
+CMD ["gunicorn", "-w", "4", "-b","0.0.0.0:80", "pss_app.wsgi"]
