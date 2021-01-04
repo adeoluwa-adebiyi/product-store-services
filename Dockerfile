@@ -14,4 +14,4 @@ EXPOSE 8000
 
 RUN echo "MODE = dev" > pss_app/.env
 
-CMD ["python3", "pss_app/manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["python3", "pss_app/manage.py", "runserver", "0.0.0.0:8000","--settings=pss_app.settings.dev"]
