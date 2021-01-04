@@ -26,7 +26,8 @@ class CheckoutService:
         else:
             sum = 0
             for item in checkout:
-                sum += Product.objects.get(id=item["id"]).price * item["quantity"]
+                sum += Product.objects.get(id=item["id"]
+                                           ).price * item["quantity"]
 
         return sum
 
@@ -37,11 +38,14 @@ class CheckoutService:
         if user is None:
             raise Exception("User data cannot be null")
 
-        checkout = Checkout.objects.create(reference=self.create_unique_uuid(), customer=user, payment_service=self.payment_service.get_tag(), total=self.get_total_price_of_checkout(checkout=data["data"]["checkout"]))
+        checkout = Checkout.objects.create(reference=self.create_unique_uuid(), customer=user, payment_service=self.payment_service.get_tag(
+        ), total=self.get_total_price_of_checkout(checkout=data["data"]["checkout"]))
         for item in data["data"]["checkout"]:
             product = Product.objects.get(id=item["id"])
-            checkout_product_info = CheckoutProductsInfo.objects.create(checkout=checkout, product=product, quantity=item["quantity"], sub_total=product.price * item["quantity"])
+            checkout_product_info = CheckoutProductsInfo.objects.create(
+                checkout=checkout, product=product, quantity=item["quantity"], sub_total=product.price * item["quantity"])
         return checkout
 
 
-checkout_service = CheckoutService(payment_service=PaystackPaymentService(api_key=os.getenv("PAYSTACK_SECRET_KEY")))
+checkout_service = CheckoutService(payment_service=PaystackPaymentService(
+    api_key=os.getenv("PAYSTACK_SECRET_KEY")))
