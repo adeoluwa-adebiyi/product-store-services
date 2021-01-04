@@ -45,7 +45,7 @@ jobs:
         cd ..
 
     - name: Lint
-    - uses: psf/black@stable
+      uses: psf/black@stable
 
 
   deploy:
