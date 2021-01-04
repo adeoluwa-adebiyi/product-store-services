@@ -30,7 +30,9 @@ ALLOWED_HOSTS = [
     "localhost",
     "192.168.43.90",
     "0ba2c82466f0.ngrok.io",
-    "195d948b47c8.ngrok.io"
+    "195d948b47c8.ngrok.io",
+    "snkkr-store.herokuapp.com",
+    "127.0.0.1"
 ]
 
 

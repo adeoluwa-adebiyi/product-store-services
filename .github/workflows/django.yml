@@ -47,6 +47,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - name: Generate Dev Dockerfile
+      run: |
+        cat Dockerfile-dev > Dockerfile
+
     - name: Deploy
       id: heroku
       uses: jctaveras/heroku-deploy@v1.0.0  # use the latest version of the action
