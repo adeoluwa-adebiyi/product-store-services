@@ -26,22 +26,26 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
+
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+
     - name: Run Tests
       run: |
         echo "MODE=dev" >> ./pss_app/pss_app/.env
         cd pss_app
         python manage.py test
         cd ..
-    - name: Black Code Formatter
-      uses: lgeiger/black-action@v1.0.1
+
+    - name: Lint
+    - uses: psf/black@stable
 
   # build-and-deploy:
   #   needs: test
